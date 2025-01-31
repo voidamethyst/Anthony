@@ -140,67 +140,189 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .captcha-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .captcha-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .captcha-code {
+            font-size: 32px;
+            letter-spacing: 8px;
+            font-family: 'Courier New', monospace;
+            background-color: #f0f0f0;
+            padding: 15px;
+            margin: 20px 0;
+            user-select: none;
+            position: relative;
+        }
+
+        .captcha-code::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #DA291C;
+            transform: rotate(-5deg);
+        }
+
+        .captcha-input {
+            padding: 10px;
+            font-size: 16px;
+            width: 200px;
+            margin: 10px 0;
+            text-align: center;
+            letter-spacing: 5px;
+        }
+
+        .captcha-button {
+            background-color: #DA291C;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+        }
+
+        .captcha-button:hover {
+            background-color: #b52116;
+        }
+
+        .main-content {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Антоні - Повна Біографія</h1>
-            <p>Шлях від Brazilian São Paulo до Manchester United</p>
-        </div>
-    </header>
-
-    <div class="container">
-        <section class="biography-section">
-            <div class="biography-photo">
-                <img src="images/anthony.jpg" alt="Антоні">
-            </div>
-
-            <div class="biography-details">
-                <h2>Життєвий Шлях</h2>
-                <p>Антоні Матеус Дос Сантос - бразильський футболіст, який підкорив серця вболівальників <a href="https://www.manutd.com" target="_blank">Manchester United</a> своїм неймовірним талантом.</p>
-
-                <div class="timeline">
-                    <div class="timeline-section">
-                        <h3>Дитинство</h3>
-                        <p>Народився в місті Сан-Бернарду-ду-Кампу. Більше про його рідне місто можна дізнатися на <a href="https://pt.wikipedia.org/wiki/S%C3%A3o_Bernardo_do_Campo" target="_blank">Wikipedia</a>.</p>
-                    </div>
-
-                    <div class="timeline-section">
-                        <h3>Початок Кар'єри</h3>
-                        <p>Розпочав займатися у футбольній академії <a href="https://www.saopaulofc.net" target="_blank">São Paulo FC</a>. Офіційний сайт клубу розповість більше про його становлення.</p>
-                    </div>
-
-                    <div class="timeline-section">
-                        <h3>Професійний Шлях</h3>
-                        <p>Детальну статистику кар'єри можна знайти на <a href="https://www.transfermarkt.com/antony/profil/spieler/602105" target="_blank">Transfermarkt</a>.</p>
-                    </div>
-                </div>
-
-                <p class="external-links">
-                    Корисні посилання:
-                    <a href="https://www.instagram.com/antony00" target="_blank">Instagram</a> |
-                    <a href="https://www.twitter.com/antony" target="_blank">Twitter</a> |
-                    <a href="https://www.fifa.com/players/anthony" target="_blank">FIFA Profile</a>
-                </p>
-            </div>
-        </section>
-
-        <div class="gif-and-description">
-            <div class="trademark-move">
-                <img src="images/anthony-spin.gif" alt="Антоні фірмовий спін">
-            </div>
-
-            <div class="trademark-move-description">
-                <h2>Фірмовий "Фіджет-Спінер" Антоні</h2>
-                <p>Унікальний футбольний трюк, який Антоні використовує, щоб обдурити захисників. Цей ефектний рух став його візитівкою на полі Manchester United, демонструючи неймовірну технічну майстерність та креативність бразильського футболіста.</p>
-                <p>Цей маневр є символом його унікального футбольного стилю - поєднання бразильської творчості та сучасної футбольної техніки.</p>
+    <div class="captcha-overlay" id="captchaOverlay">
+        <div class="captcha-container">
+            <h2>Підтвердіть, що ви людина</h2>
+            <div class="captcha-code" id="captchaCode"></div>
+            <input type="text" class="captcha-input" id="captchaInput" placeholder="Введіть код">
+            <div>
+                <button class="captcha-button" onclick="validateCaptcha()">Підтвердити</button>
+                <button class="captcha-button" onclick="generateCaptcha()">Оновити</button>
             </div>
         </div>
     </div>
 
-    <footer style="background-color: #DA291C; color: white; text-align: center; padding: 20px;">
-        <p>&copy; 2024 Антоні - Легенда Manchester United</p>
-    </footer>
+    <div class="main-content">
+        <header>
+            <div class="container">
+                <h1>Антоні - Повна Біографія</h1>
+                <p>Шлях від бразильского São Paulo до Manchester United</p>
+            </div>
+        </header>
+
+        <div class="container">
+            <section class="biography-section">
+                <div class="biography-photo">
+                    <img src="images/anthony.jpg" alt="Антоні">
+                </div>
+
+                <div class="biography-details">
+                    <h2>Життєвий Шлях</h2>
+                    <p>Антоні Матеус Дос Сантос - бразильський футболіст, який підкорив серця вболівальників <a href="https://www.manutd.com" target="_blank">Manchester United</a> своїм неймовірним талантом.</p>
+
+                    <div class="timeline">
+                        <div class="timeline-section">
+                            <h3>Дитинство</h3>
+                            <p>Народився в місті Сан-Бернарду-ду-Кампу. Більше про його рідне місто можна дізнатися на <a href="https://pt.wikipedia.org/wiki/S%C3%A3o_Bernardo_do_Campo" target="_blank">Wikipedia</a>.</p>
+                        </div>
+
+                        <div class="timeline-section">
+                            <h3>Початок Кар'єри</h3>
+                            <p>Розпочав займатися у футбольній академії <a href="https://www.saopaulofc.net" target="_blank">São Paulo FC</a>. Офіційний сайт клубу розповість більше про його становлення.</p>
+                        </div>
+
+                        <div class="timeline-section">
+                            <h3>Професійний Шлях</h3>
+                            <p>Детальну статистику кар'єри можна знайти на <a href="https://www.transfermarkt.com/antony/profil/spieler/602105" target="_blank">Transfermarkt</a>.</p>
+                        </div>
+                    </div>
+
+                    <p class="external-links">
+                        Корисні посилання:
+                        <a href="https://www.instagram.com/antony00" target="_blank">Instagram</a> |
+                        <a href="https://www.twitter.com/antony" target="_blank">Twitter</a> |
+                        <a href="https://www.fifa.com/players/anthony" target="_blank">FIFA Profile</a>
+                    </p>
+                </div>
+            </section>
+
+            <div class="gif-and-description">
+                <div class="trademark-move">
+                    <img src="images/anthony-spin.gif" alt="Антоні фірмовий спін">
+                </div>
+
+                <div class="trademark-move-description">
+                    <h2>Фірмовий "Фіджет-Спінер" Антоні</h2>
+                    <p>Унікальний футбольний трюк, який Антоні використовує, щоб обдурити захисників. Цей ефектний рух став його візитівкою на полі Manchester United, демонструючи неймовірну технічну майстерність та креативність бразильського футболіста.</p>
+                    <p>Цей фінт є символом його унікального футбольного стилю - поєднання бразильської творчості та сучасної футбольної техніки.</p>
+                </div>
+            </div>
+        </div>
+
+        <footer style="background-color: #DA291C; color: white; text-align: center; padding: 20px;">
+            <p>&copy; 2024 Антоні - Легенда Manchester United</p>
+        </footer>
+    </div>
+
+    <script>
+        function generateCaptcha() {
+            const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+            let captcha = '';
+            for (let i = 0; i < 6; i++) {
+                captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('captchaCode').textContent = captcha;
+            document.getElementById('captchaInput').value = '';
+            return captcha;
+        }
+
+        function validateCaptcha() {
+            const inputValue = document.getElementById('captchaInput').value;
+            const captchaValue = document.getElementById('captchaCode').textContent;
+
+            if (inputValue === captchaValue) {
+                document.getElementById('captchaOverlay').style.display = 'none';
+                document.querySelector('.main-content').style.display = 'block';
+            } else {
+                alert('Невірний код. Спробуйте ще раз.');
+                generateCaptcha();
+            }
+        }
+
+        document.getElementById('captchaInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                validateCaptcha();
+            }
+        });
+
+        window.onload = function() {
+            generateCaptcha();
+        };
+    </script>
 </body>
 </html>
